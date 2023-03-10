@@ -1,12 +1,3 @@
 <template>
-  <div class="login">
-    <el-button type="primary">login</el-button>
-  </div>
+  <el-button type="primary">login</el-button>
 </template>
-
-
-<style scoped>
-  .login {
-
-  }
-</style>
