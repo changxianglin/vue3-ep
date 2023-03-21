@@ -2,8 +2,10 @@
   <el-table
     ref="multipleTableRef"
     :data="tableData"
+    :border="true"
     style="width: 100%"
     @selection-change="handleSelectionChange"
+    :header-cell-class-name="selectionClass"
   >
     <el-table-column type="selection" width="55" />
     <el-table-column label="Date" width="120">
@@ -12,43 +14,44 @@
     <el-table-column property="name" label="Name" width="120" />
     <el-table-column property="address" label="Address" show-overflow-tooltip />
   </el-table>
-  <div style="margin-top: 20px">
+  <!-- <div style="margin-top: 20px">
     <el-button @click="toggleSelection([tableData[1], tableData[2]])"
       >Toggle selection status of second and third rows</el-button
     >
     <el-button @click="toggleSelection()">Clear selection</el-button>
-  </div>
+  </div> -->
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref } from 'vue'
 import { ElTable } from 'element-plus'
 
-interface User {
-  date: string
-  name: string
-  address: string
-}
+const multipleTableRef = ref()
+const multipleSelection = ref([])
 
-const multipleTableRef = ref<InstanceType<typeof ElTable>>()
-const multipleSelection = ref<User[]>([])
-const toggleSelection = (rows?: User[]) => {
+const selectionClass= (row) => {
+if (row.columnIndex === 0) {
+return "disabled";
+}
+};
+
+const toggleSelection = (rows) => {
   if (rows) {
     rows.forEach((row) => {
       // TODO: improvement typing when refactor table
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      multipleTableRef.value!.toggleRowSelection(row, undefined)
+      multipleTableRef.value.toggleRowSelection(row, undefined)
     })
   } else {
-    multipleTableRef.value!.clearSelection()
+    multipleTableRef.value.clearSelection()
   }
 }
-const handleSelectionChange = (val: User[]) => {
+const handleSelectionChange = (val) => {
   multipleSelection.value = val
 }
 
-const tableData: User[] = [
+const tableData = [
   {
     date: '2016-05-03',
     name: 'Tom',
@@ -86,3 +89,9 @@ const tableData: User[] = [
   },
 ]
 </script>
+
+<style lang="less" scoped>
+  /deep/.order .el-table__header-wrapper  .el-checkbox{
+    display:none;
+  }
+</style>
