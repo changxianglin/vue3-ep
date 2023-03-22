@@ -91,7 +91,7 @@ const tableData = [
 </script>
 
 <style lang="less" scoped>
-  /deep/.order .el-table__header-wrapper  .el-checkbox{
+  /deep/ .el-table__header-wrapper  .el-checkbox{
     display:none;
   }
 </style>
