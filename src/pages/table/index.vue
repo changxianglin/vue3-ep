@@ -23,19 +23,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { ElTable } from 'element-plus'
 
 const multipleTableRef = ref()
 const multipleSelection = ref([])
 
-const selectionClass= (row) => {
-if (row.columnIndex === 0) {
-return "disabled";
-}
-};
+onMounted(() => {
+  nextTick(() => {
+    toggleSelection(tableData)
+  })
+})
 
 const toggleSelection = (rows) => {
+  console.log('获得数据', rows)
   if (rows) {
     rows.forEach((row) => {
       // TODO: improvement typing when refactor table
